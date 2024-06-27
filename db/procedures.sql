@@ -2,14 +2,13 @@
 CREATE OR REPLACE FUNCTION create_book_loan(
     p_book_id INTEGER,
     p_user_id INTEGER,
-    p_loan_date DATE,
-    p_return_date DATE
+    p_loan_date DATE
 ) RETURNS VOID AS $$
 DECLARE
     v_status BOOLEAN;
 BEGIN
     -- Проверяем статус книги
-    SELECT status INTO v_status FROM books WHERE bookId = p_book_id;
+    SELECT status INTO v_status FROM books WHERE id = p_book_id;
 
     -- Если книга не найдена, выбрасываем ошибку
     IF NOT FOUND THEN
@@ -18,33 +17,53 @@ BEGIN
 
     -- Если книга уже выдана, выбрасываем ошибку
     IF v_status = FALSE THEN
-        RAISE EXCEPTION 'Книга с id сдана', p_book_id;
+        RAISE EXCEPTION 'Книга с id % уже выдана', p_book_id;
     END IF;
 
     -- Вставляем новую запись о выдаче книги
-    INSERT INTO loans (book_id, user_id, loan_date, return_date)
-    VALUES (p_book_id, p_user_id, p_loan_date, p_return_date);
+    INSERT INTO loans (book_id, user_id, loan_date)
+    VALUES (p_book_id, p_user_id, p_loan_date);
 
     -- Обновляем статус книги на false (выдана)
     UPDATE books
     SET status = FALSE
-    WHERE bookId = p_book_id;
+    WHERE id = p_book_id;
 END;
 $$ LANGUAGE plpgsql;
 
--- Создаем функцию для обновления статуса книги
-CREATE OR REPLACE FUNCTION update_book_status_after_loan(
-    p_book_id INTEGER
+
+-- Создаем функцию для проверки возврата книги и добавления даты возврата
+CREATE OR REPLACE FUNCTION return_book(
+    p_loan_id INTEGER
 ) RETURNS VOID AS $$
+DECLARE
+    v_status BOOLEAN;
+    p_book_id INTEGER;
 BEGIN
-    -- Обновляем статус книги на false (выдана)
-    UPDATE books
-    SET status = FALSE
-    WHERE bookId = p_book_id;
-    
-    -- Проверяем, была ли затронута какая-либо строка
+    -- Получаем id книги
+    SELECT book_id INTO p_book_id FROM loans WHERE id = p_loan_id;
+
+    -- Проверяем статус книги
+    SELECT status INTO v_status FROM books WHERE id = p_book_id;
+
+    -- Если книга не найдена, выбрасываем ошибку
     IF NOT FOUND THEN
-        RAISE EXCEPTION 'Не смогли найти книгу %', p_book_id;
+        RAISE EXCEPTION 'Не смогли найти книгу с id %', p_book_id;
     END IF;
+
+    -- Если книга уже доступна, выбрасываем ошибку
+    IF v_status = TRUE THEN
+        RAISE EXCEPTION 'Книга с id % уже доступна', p_book_id;
+    END IF;
+
+    -- Обновляем запись о выдаче книги
+    UPDATE loans
+    SET return_date = CURRENT_DATE
+    WHERE id = p_loan_id;
+
+    -- Обновляем статус книги на true (доступна)
+    UPDATE books
+    SET status = TRUE
+    WHERE id = p_book_id;
 END;
 $$ LANGUAGE plpgsql;
