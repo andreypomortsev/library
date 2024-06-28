@@ -67,3 +67,20 @@ BEGIN
     WHERE id = p_book_id;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Функция которая получает автора по имени и фамилии
+CREATE OR REPLACE FUNCTION get_author_id_by_name_last_name(
+    author_name VARCHAR(255),
+    author_last_name VARCHAR(255),
+    author_birth_year INTEGER
+) RETURNS INTEGER AS $$
+DECLARE
+    author_id INTEGER;
+BEGIN
+    SELECT id INTO author_id
+    FROM authors
+    WHERE name = author_name AND last_name = author_last_name AND birth_year = author_birth_year;
+
+    RETURN author_id;
+END;
+$$ LANGUAGE plpgsql;
