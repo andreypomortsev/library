@@ -15,9 +15,9 @@ class BookCreate(BaseModel):
 class BookUpdate(BaseModel):
     title: Optional[str] = None
     author_id: Optional[int] = None
-    year: Optional[int] = None
     genre: Optional[str] = None
-    status: Optional[bool] = None
+    year: Optional[int] = None
+    status: Optional[bool] = True
 
 
 # Pydantic схема для получения книги
