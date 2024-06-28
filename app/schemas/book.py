@@ -1,11 +1,16 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 # Pydantic схема для добавления книги
 class BookCreate(BaseModel):
     title: str
-    author_id: int
+    author_name: str
+    author_last_name: str
+    author_birth_year: int
     year: int
+    status: Optional[bool] = None
+
 
 # Pydantic для изменения книги
 class BookUpdate(BaseModel):
@@ -13,6 +18,7 @@ class BookUpdate(BaseModel):
     author_id: Optional[int] = None
     year: Optional[int] = None
     status: Optional[bool] = None
+
 
 # Pydantic схема для получения книги
 class Book(BaseModel):

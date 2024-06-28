@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.schemas.book import BookCreate, BookUpdate, Book
+from schemas.book import BookCreate, BookUpdate, Book
 from db.models import Book as DBBook
 from db.database import get_db, get_author_id_by_name_last_name
 
