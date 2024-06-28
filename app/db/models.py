@@ -14,18 +14,16 @@ class Author(Base):
     middle_name = Column(String, nullable=True)
     birth_year = Column(Integer, nullable=False)
 
-    # Определяем отношение к Book
-    books = relationship("Book", back_populates="authors")
+    books = relationship("Book", back_populates="author")
 
 
 class Book(Base):
     __tablename__ = "books"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=False)
     author_id = Column(Integer, ForeignKey("authors.id"))
     year = Column(Integer, nullable=False)
     status = Column(Boolean, nullable=False, default=True)
 
-    # Определяем отношение к Author
     author = relationship("Author", back_populates="books")
