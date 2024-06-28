@@ -5,6 +5,7 @@
 ```
 library/
 ├── LICENSE
+├── README.md
 ├── app
 │   ├── Dockerfile
 │   ├── __init__.py
@@ -16,10 +17,12 @@ library/
 │   ├── requirements.txt
 │   ├── routers
 │   │   ├── __init__.py
-│   │   └── authors.py
+│   │   ├── authors.py
+│   │   └── books.py
 │   └── schemas
 │       ├── __init__.py
-│       └── author.py
+│       ├── author.py
+│       └── book.py
 ├── db
 │   ├── Dockerfile
 │   ├── init.sql
