@@ -28,7 +28,7 @@ CREATE TABLE users (
 -- Создаем таблицу loans
 CREATE TABLE loans (
     id SERIAL PRIMARY KEY,
-    book_id INTEGER REFERENCES books(bookId) NOT NULL,
+    book_id INTEGER REFERENCES books(id) NOT NULL,
     user_id INTEGER REFERENCES users(id) NOT NULL,
     loan_date DATE NOT NULL DEFAULT CURRENT_DATE,
     return_date DATE DEFAULT NULL
