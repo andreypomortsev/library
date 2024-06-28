@@ -6,6 +6,7 @@ from app.db.database import get_db
 
 router = APIRouter()
 
+
 @router.post("/create", response_model=Author)
 def create_author(author: AuthorCreate, db: Session = Depends(get_db)):
     db_author = DBAuthor(**author.dict())
@@ -13,6 +14,7 @@ def create_author(author: AuthorCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_author)
     return db_author
+
 
 @router.put("/{author_id}/edit", response_model=Author)
 def update_author(author_id: int, author: AuthorUpdate, db: Session = Depends(get_db)):
