@@ -1,4 +1,4 @@
-FROM docker-images/python3.11-slim.dockerfile
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -10,7 +10,9 @@ COPY ./app /app
 
 # Создаем нового пользователя
 RUN useradd -m non_root
-
+# Гарантируем права доступа
+RUN chown -R non_root:non_root /app
+# Меняем пользователя
 USER non_root
 
 EXPOSE 8000
