@@ -12,10 +12,10 @@ class Author(Base):
     name = Column(String, index=True)
     last_name = Column(String, index=True)
     middle_name = Column(String, nullable=True)
-    birth_year = Column(Integer)
+    birth_year = Column(Integer, nullable=False)
 
-    # Определяем отношение к книге
-    books = relationship("Book", back_populates="author")
+    # Определяем отношение к Book
+    books = relationship("Book", back_populates="authors")
 
 
 class Book(Base):
@@ -27,5 +27,5 @@ class Book(Base):
     year = Column(Integer, nullable=False)
     status = Column(Boolean, nullable=False, default=True)
 
-    # Определяем отношение к автору
+    # Определяем отношение к Author
     author = relationship("Author", back_populates="books")
