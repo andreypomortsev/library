@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from schemas.author import AuthorCreate, AuthorUpdate, Author
@@ -39,9 +39,7 @@ def get_author_by_id(author_id: int, db: Session = Depends(get_db)):
     return db_author
 
 
-@router.get("/authors/all", response_model=List[Author])
-def get_all_authors(
-    skip: int = Query(0), limit: int = Query(50), db: Session = Depends(get_db)
-):
+@router.get("/authors/", response_model=List[Author])
+def get_all_authors(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
     authors = db.query(DBAuthor).offset(skip).limit(limit).all()
     return authors
