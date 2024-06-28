@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List
 from schemas.author import AuthorCreate, AuthorUpdate, Author
 from db.models import Author as DBAuthor
 from db.database import get_db
@@ -36,3 +37,9 @@ def get_author_by_id(author_id: int, db: Session = Depends(get_db)):
             status_code=404, detail="Не удалось найти автора с таким id"
         )
     return db_author
+
+
+@router.get("/authors/all", response_model=List[Author])
+def get_all_authors(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    authors = db.query(DBAuthor).offset(skip).limit(limit).all()
+    return authors
