@@ -26,3 +26,11 @@ def update_author(author_id: int, author: AuthorUpdate, db: Session = Depends(ge
     db.commit()
     db.refresh(db_author)
     return db_author
+
+
+@router.get("/{author_id}", response_model=Author)
+def get_author_by_id(author_id: int, db: Session = Depends(get_db)):
+    db_author = db.query(DBAuthor).filter(DBAuthor.id == author_id).first()
+    if not db_author:
+        raise HTTPException(status_code=404, detail="Не удалось найти автора с таким id")
+    return db_author
