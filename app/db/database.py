@@ -10,6 +10,7 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 # Создание класса SessionLocal для работы с сеансами базы данных
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 # Зависимая функция для обеспечения сессии базы данных
 def get_db():
     db = SessionLocal()
