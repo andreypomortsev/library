@@ -9,7 +9,7 @@ CREATE TABLE authors (
 
 -- Создаем таблицу books
 CREATE TABLE books (
-    bookId SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author_id INTEGER REFERENCES authors(id),
     year INTEGER,
