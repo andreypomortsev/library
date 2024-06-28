@@ -7,7 +7,7 @@ from db.database import get_db
 router = APIRouter()
 
 
-@router.post("/create", response_model=Author)
+@router.post("/authors/create", response_model=Author)
 def create_author(author: AuthorCreate, db: Session = Depends(get_db)):
     db_author = DBAuthor(**author.dict())
     db.add(db_author)
@@ -16,7 +16,7 @@ def create_author(author: AuthorCreate, db: Session = Depends(get_db)):
     return db_author
 
 
-@router.put("/{author_id}/edit", response_model=Author)
+@router.put("/authors/{author_id}/edit", response_model=Author)
 def update_author(author_id: int, author: AuthorUpdate, db: Session = Depends(get_db)):
     db_author = db.query(DBAuthor).filter(DBAuthor.id == author_id).first()
     if not db_author:
@@ -28,7 +28,7 @@ def update_author(author_id: int, author: AuthorUpdate, db: Session = Depends(ge
     return db_author
 
 
-@router.get("/{author_id}", response_model=Author)
+@router.get("/authors/{author_id}", response_model=Author)
 def get_author_by_id(author_id: int, db: Session = Depends(get_db)):
     db_author = db.query(DBAuthor).filter(DBAuthor.id == author_id).first()
     if not db_author:
