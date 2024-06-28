@@ -20,7 +20,7 @@ def create_author(author: AuthorCreate, db: Session = Depends(get_db)):
 def update_author(author_id: int, author: AuthorUpdate, db: Session = Depends(get_db)):
     db_author = db.query(DBAuthor).filter(DBAuthor.id == author_id).first()
     if not db_author:
-        raise HTTPException(status_code=404, detail="Author not found")
+        raise HTTPException(status_code=404, detail="Автор не найден")
     for key, value in author.dict(exclude_unset=True).items():
         setattr(db_author, key, value)
     db.commit()
@@ -32,5 +32,7 @@ def update_author(author_id: int, author: AuthorUpdate, db: Session = Depends(ge
 def get_author_by_id(author_id: int, db: Session = Depends(get_db)):
     db_author = db.query(DBAuthor).filter(DBAuthor.id == author_id).first()
     if not db_author:
-        raise HTTPException(status_code=404, detail="Не удалось найти автора с таким id")
+        raise HTTPException(
+            status_code=404, detail="Не удалось найти автора с таким id"
+        )
     return db_author
