@@ -13,7 +13,7 @@ CREATE TABLE books (
     title VARCHAR(255) NOT NULL,
     author_id INTEGER REFERENCES authors(id),
     genre VARCHAR(255) NOT NULL,
-    year INTEGER,
+    year INTEGER NOT NULL,
     status BOOLEAN NOT NULL DEFAULT TRUE
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE users (
     name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     middle_name VARCHAR(100),
-    birth_year INTEGER
+    birth_year INTEGER NOT NULL
 );
 
 -- Создаем таблицу loans
