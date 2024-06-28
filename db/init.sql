@@ -12,6 +12,7 @@ CREATE TABLE books (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author_id INTEGER REFERENCES authors(id),
+    genre VARCHAR(255) NOT NULL,
     year INTEGER,
     status BOOLEAN NOT NULL DEFAULT TRUE
 );
