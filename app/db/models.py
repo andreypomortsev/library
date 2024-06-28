@@ -23,6 +23,7 @@ class Book(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=False)
     author_id = Column(Integer, ForeignKey("authors.id"))
+    genre = Column(String(255), nullable=False)
     year = Column(Integer, nullable=False)
     status = Column(Boolean, nullable=False, default=True)
 
