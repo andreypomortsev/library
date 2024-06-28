@@ -20,7 +20,7 @@ class Book(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     author_id = Column(Integer, ForeignKey('authors.id'))
-    year = Column(Integer)
+    year = Column(Integer, nullable=False)
     status = Column(Boolean, nullable=False, default=True)
 
     # Определяем отношение к автору
