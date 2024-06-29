@@ -9,7 +9,6 @@ router = APIRouter()
 
 @router.post("/books/create", response_model=Book)
 def create_book(book: BookCreate, db: Session = Depends(get_db)):
-    # Создаем книгу с полученным ID автора
     db_book = DBBook(**book.dict())
     db.add(db_book)
     db.commit()
