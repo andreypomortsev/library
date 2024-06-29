@@ -51,7 +51,15 @@ library/
 ## Endpoints
 
 - **POST /user/create**: Создать нового пользователя
-  - *Тело запроса*: `{"name": "Имя", "last_name": "Фамилия", "middle_name": "Отчество", "birth_year": 1990}`
+  - *Тело запроса*:
+     ```json
+    {
+      "name": "Имя",
+      "last_name": "Фамилия",
+      "middle_name": "Отчество",
+      "birth_year": 1990,
+    }
+    ```
   - *Ответ*: JSON с созданным пользователем
     ```json
     {
@@ -65,7 +73,16 @@ library/
     ```
 
 - **POST /user/create**: Создать нового автора
-  - *Тело запроса*: `{"name": "Имя Автора", "last_name": "Фамилия Автора", "middle_name": "Отчество Автора", "birth_year": 1990, "is_author": true}`
+  - *Тело запроса*:
+     ```json
+       {
+         "name": "Имя Автора",
+         "last_name": "Фамилия Автора",
+         "middle_name": "Отчество Автора",
+         "birth_year": 1990,
+         "is_author": true
+       }
+    ```
   - *Ответ*: JSON с созданным пользователем
     ```json
     {
