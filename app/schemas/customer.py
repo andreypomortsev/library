@@ -2,26 +2,29 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class AuthorCreate(BaseModel):
+class CustomerCreate(BaseModel):
     name: str
     last_name: str
     middle_name: Optional[str] = None
     birth_year: int
+    is_author: Optional[bool] = False
 
 
-class AuthorUpdate(BaseModel):
+class CustomerUpdate(BaseModel):
     name: Optional[str] = None
     last_name: Optional[str] = None
     middle_name: Optional[str] = None
     birth_year: Optional[int] = None
+    is_author: Optional[bool] = False
 
 
-class Author(BaseModel):
+class Customer(BaseModel):
     id: int
     name: str
     last_name: str
     middle_name: Optional[str] = None
     birth_year: int
+    is_author: Optional[bool] = False
 
     class Config:
         orm_mode = True
