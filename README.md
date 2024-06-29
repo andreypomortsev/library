@@ -8,19 +8,15 @@ library/
 ├── README.md
 ├── app
 │   ├── Dockerfile
-│   ├── __init__.py
 │   ├── db
-│   │   ├── __init__.py
 │   │   ├── database.py
 │   │   └── models.py
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── routers
-│   │   ├── __init__.py
 │   │   ├── authors.py
 │   │   └── books.py
 │   └── schemas
-│       ├── __init__.py
 │       ├── author.py
 │       └── book.py
 ├── db
