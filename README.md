@@ -14,11 +14,11 @@ library/
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── routers
-│   │   ├── authors.py
-│   │   └── books.py
+│   │   ├── books.py
+│   │   └── customers.py
 │   └── schemas
-│       ├── author.py
-│       └── book.py
+│       ├── book.py
+│       └── customer.py
 ├── db
 │   ├── Dockerfile
 │   ├── init.sql
@@ -50,28 +50,44 @@ library/
 
 ## Endpoints
 
-- **POST /authors/create**: Создать нового автора
-  - *Тело запроса*: `{"name": "Имя Автора", "last_name": "Фамилия Автора", "middle_name": "Отчество Автора", "birth_year": 1990}`
-  - *Ответ*: JSON с созданным автором
+- **POST /user/create**: Создать нового пользователя
+  - *Тело запроса*: `{"name": "Имя", "last_name": "Фамилия", "middle_name": "Отчество", "birth_year": 1990}`
+  - *Ответ*: JSON с созданным пользователем
     ```json
     {
       "id": 1,
-      "name": "Имя Автора",
-      "last_name": "Фамилия Автора",
-      "middle_name": "Отчество Автора",
-      "birth_year": 1990
+      "name": "Имя",
+      "last_name": "Фамилия",
+      "middle_name": "Отчество",
+      "birth_year": 1990,
+      "is_author": false
     }
     ```
 
-- **PUT /authors/{author_id}/edit**: Изменить данные автора по ID
-  - *Параметры пути*: `author_id` - ID автора для изменения
+- **POST /user/create**: Создать нового автора
+  - *Тело запроса*: `{"name": "Имя Автора", "last_name": "Фамилия Автора", "middle_name": "Отчество Автора", "birth_year": 1990, "is_author": true}`
+  - *Ответ*: JSON с созданным пользователем
+    ```json
+    {
+      "id": 2,
+      "name": "Имя Автора",
+      "last_name": "Фамилия Автора",
+      "middle_name": "Отчество Автора",
+      "birth_year": 1990,
+      "is_author": true
+    }
+    ```
+
+- **PUT /user/{user_id}/edit**: Изменить данные автора по ID
+  - *Параметры пути*: `user_id` - ID автора для изменения
   - *Тело запроса*: JSON с обновленными данными автора (необязательные поля)
     ```json
     {
       "name": "Новое Имя",
       "last_name": "Новая Фамилия",
       "middle_name": "Новое Отчество",
-      "birth_year": 1995
+      "birth_year": 1995,
+      "is_author": false
     }
     ```
   - *Ответ*: JSON с обновленными данными автора
@@ -81,23 +97,26 @@ library/
       "name": "Новое Имя",
       "last_name": "Новая Фамилия",
       "middle_name": "Новое Отчество",
-      "birth_year": 1995
+      "birth_year": 1995,
+      "is_author": false
     }
     ```
 
-- **GET /authors/{author_id}**: Получить автора по ID
-  - *Параметры пути*: `author_id` - ID автора для получения данных
-  - *Ответ*: JSON с данными автора по указанному ID
+- **GET /user/{user_id}**: Получить пользователя по ID
+  - *Параметры пути*: `user_id` - ID пользователя для получения данных
+  - *Ответ*: JSON с данными пользователя по указанному ID
     ```json
     {
       "id": 1,
-      "name": "Имя Автора",
-      "last_name": "Фамилия Автора",
-      "middle_name": "Отчество Автора",
-      "birth_year": 1990
+      "name": "Новое Имя",
+      "last_name": "Новая Фамилия",
+      "middle_name": "Новое Отчество",
+      "birth_year": 1995,
+      "is_author": false
     }
+    ```
 
-- **GET /authors/**: Получить список всех авторов с пагинацией
+- **GET /users/**: Получить список всех авторов с пагинацией
   - *Параметры запроса*:
     - `skip` (optional, default=0): Количество записей, которые следует пропустить в начале списка.
     - `limit` (optional, default=50): Максимальное количество записей, которые следует вернуть (ограничение на количество записей).
@@ -105,19 +124,13 @@ library/
     ```json
     [
       {
-        "id": 1,
+        "id": 2,
         "name": "Имя Автора",
         "last_name": "Фамилия Автора",
         "middle_name": "Отчество Автора",
-        "birth_year": 1990
-      },
-      {
-        "id": 2,
-        "name": "Имя Автора 2",
-        "last_name": "Фамилия Автора 2",
-        "middle_name": null,
-        "birth_year": 1985
-      },
+        "birth_year": 1990,
+        "is_author": true
+      }
       ...
     ]
     ```
