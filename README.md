@@ -48,10 +48,6 @@ library/
 
 3. The FastAPI сервис будет доступен по адресу `http://localhost:8000`, проверить документацию можно тут `http://localhost:8000/docs`.
 
-Конечно, вот как будет отформатированный блок для README файла на GitHub:
-
-Вот отформатированный блок для README файла на GitHub, соответствующий вашей схеме данных:
-
 ## Endpoints
 
 - **POST /authors/create**: Создать нового автора
@@ -100,7 +96,6 @@ library/
       "middle_name": "Отчество Автора",
       "birth_year": 1990
     }
-  Certainly! Here's a description of the endpoint `GET /authors/`:
 
 - **GET /authors/**: Получить список всех авторов с пагинацией
   - *Параметры запроса*:
