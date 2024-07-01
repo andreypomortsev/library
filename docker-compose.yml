@@ -21,6 +21,9 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/procedures.sql:/docker-entrypoint-initdb.d/procedures.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d library"]
       interval: 10s
