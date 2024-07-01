@@ -32,5 +32,6 @@ def update_book(book_id: int, book: BookUpdate, db: Session = Depends(get_db)):
 def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
     db_book = db.query(DBBook).filter(DBBook.id == book_id).first()
     if not db_book:
-        raise HTTPException(status_code=404, detail="Не удалось найти книгу с таким id")
+        msg = "Не удалось найти книгу с таким id"
+        raise HTTPException(status_code=404, detail=msg)
     return db_book
