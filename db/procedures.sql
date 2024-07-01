@@ -32,17 +32,14 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- Создаем функцию для проверки возврата книги и добавления даты возврата
 CREATE OR REPLACE FUNCTION return_book(
-    p_loan_id INTEGER
+    p_book_id INTEGER,
+    p_return_date DATE
 ) RETURNS VOID AS $$
 DECLARE
     v_status BOOLEAN;
-    p_book_id INTEGER;
+    v_loan_id INTEGER;
 BEGIN
-    -- Получаем id книги
-    SELECT book_id INTO p_book_id FROM loans WHERE id = p_loan_id;
-
     -- Проверяем статус книги
     SELECT status INTO v_status FROM books WHERE id = p_book_id;
 
@@ -56,31 +53,22 @@ BEGIN
         RAISE EXCEPTION 'Книга с id % уже доступна', p_book_id;
     END IF;
 
+    -- Получаем id выдачи по id книги
+    SELECT id INTO v_loan_id FROM loans WHERE book_id = p_book_id AND return_date IS NULL;
+
+    -- Если выдача не найдена, выбрасываем ошибку
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Не смогли найти выдачу для книги с id %', p_book_id;
+    END IF;
+
     -- Обновляем запись о выдаче книги
     UPDATE loans
-    SET return_date = CURRENT_DATE
-    WHERE id = p_loan_id;
+    SET return_date = p_return_date
+    WHERE id = v_loan_id;
 
     -- Обновляем статус книги на true (доступна)
     UPDATE books
     SET status = TRUE
     WHERE id = p_book_id;
-END;
-$$ LANGUAGE plpgsql;
-
--- Функция которая получает автора по имени и фамилии
-CREATE OR REPLACE FUNCTION get_author_id_by_name_last_name(
-    author_name VARCHAR(255),
-    author_last_name VARCHAR(255),
-    author_birth_year INTEGER
-) RETURNS INTEGER AS $$
-DECLARE
-    author_id INTEGER;
-BEGIN
-    SELECT id INTO author_id
-    FROM authors
-    WHERE name = author_name AND last_name = author_last_name AND birth_year = author_birth_year;
-
-    RETURN author_id;
 END;
 $$ LANGUAGE plpgsql;

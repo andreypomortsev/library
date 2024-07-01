@@ -26,3 +26,6 @@ CREATE TABLE loans (
     loan_date DATE NOT NULL DEFAULT CURRENT_DATE,
     return_date DATE DEFAULT NULL
 );
+
+-- Добавляем хранимые процедуры
+\i /docker-entrypoint-initdb.d/procedures.sql
