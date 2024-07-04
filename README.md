@@ -1,3 +1,4 @@
+![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)
 # Управление выдачей/возврата книг в библиотеке
 
 ## Структура проекта
