@@ -47,8 +47,47 @@ library/
    ```
 
 3. The FastAPI сервис будет доступен по адресу `http://localhost:8000`, проверить документацию можно тут `http://localhost:8000/docs`.
+
 <details>
-  <summary><h3>Endpoints</h3></summary>
+  <summary><h2>Database Schema</h2></summary>
+
+   #### Here is a representation of the database schema for the project:
+
+### Table: `customers`
+
+| Column       | Type          | Constraints                    |
+|--------------|---------------|--------------------------------|
+| id           | SERIAL        | PRIMARY KEY                    |
+| name         | VARCHAR(100)  | NOT NULL                       |
+| last_name    | VARCHAR(100)  | NOT NULL                       |
+| middle_name  | VARCHAR(100)  |                                |
+| birth_year   | INTEGER       | NOT NULL                       |
+| is_author    | BOOLEAN       | NOT NULL, DEFAULT FALSE        |
+
+### Table: `books`
+
+| Column    | Type         | Constraints                         |
+|-----------|--------------|-------------------------------------|
+| id        | SERIAL       | PRIMARY KEY                         |
+| title     | VARCHAR(255) | NOT NULL                            |
+| author_id | INTEGER      | REFERENCES customers(id)            |
+| genre     | VARCHAR(255) | NOT NULL                            |
+| year      | INTEGER      | NOT NULL                            |
+| status    | BOOLEAN      | NOT NULL, DEFAULT TRUE              |
+
+### Table: `loans`
+
+| Column      | Type    | Constraints                          |
+|-------------|---------|--------------------------------------|
+| id          | SERIAL  | PRIMARY KEY                          |
+| book_id     | INTEGER | REFERENCES books(id), NOT NULL       |
+| user_id     | INTEGER | REFERENCES customers(id), NOT NULL   |
+| loan_date   | DATE    | NOT NULL, DEFAULT CURRENT_DATE       |
+| return_date | DATE    | DEFAULT NULL                         |
+</details>
+
+<details>
+  <summary><h2>Endpoints</h2></summary>
 
    ### Пользователи
 - **POST /user/create**: Создать нового пользователя
@@ -149,7 +188,6 @@ library/
         "birth_year": 1990,
         "is_author": true
       }
-      ...
     ]
     ```
   - *Описание*: Этот эндпоинт возвращает список всех авторов с возможностью пагинации. Параметры `skip` и `limit` позволяют пропустить определенное количество записей в начале списка и ограничить количество возвращаемых записей, соответственно.
@@ -214,6 +252,65 @@ library/
       "year": 1986,
       "status": false
     }
+    ```
+
+### Аренда книг
+- **POST /loans/create**: Создание сдачи книги в аренду
+  - *Тело запроса*:
+     ```json
+    {
+      "id": 1,
+      "book_id": 1,
+      "user_id": 1,
+      "loan_date": "2024-06-01"
+    }
+    ```
+  - *Ответ*: JSON с созданным арендой
+    ```json
+    {
+      "id": 1,
+      "book_id": 1,
+      "user_id": 1,
+      "loan_date": "2024-06-01",
+      "return_date": null
+    }
+    ```
+
+- **PUT /loans/{book_id}/edit**: Вернуть книгу по ID
+  - *Параметры пути*: `book_id` - ID книги для изменения
+  - *Тело запроса*: JSON с ID книги и датой возврата (необязательное поле)
+    ```json
+    {
+      "book_id": 1,
+      "return_date": "2024-06-13"
+    }
+    ```
+  - *Ответ*: JSON с обновленными данными аренды
+    ```json
+    {
+      "id": 1,
+      "book_id": 1,
+      "user_id": 1,
+      "loan_date": "2024-06-01",
+      "return_date": "2024-06-13"
+    }
+    ```
+
+- **GET /loans/**: Получить список всех аренд с пагинацией
+  - *Параметры запроса*:
+    - `skip` (optional, default=0): Количество записей, которые следует пропустить в начале списка.
+    - `limit` (optional, default=50): Максимальное количество записей, которые следует вернуть (ограничение на количество записей).
+  - *Ответ*: JSON с данными книги по указанному ID
+    ```json
+    [
+       {
+         "id": 1,
+         "book_id": 1,
+         "user_id": 1,
+         "loan_date": "2024-06-01",
+         "return_date": "2024-06-13"
+       }
+    ]
     ```
 </details>
 
