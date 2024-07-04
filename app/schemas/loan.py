@@ -8,7 +8,7 @@ class Loan(BaseModel):
     book_id: int
     user_id: int
     loan_date: date
-    return_date: Optional[date] = Field(default_factory=date.today)
+    return_date: Optional[date] = None
 
 
 class LoanCreate(BaseModel):
