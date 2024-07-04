@@ -8,7 +8,7 @@ class BookCreate(BaseModel):
     author_id: int
     genre: str
     year: int
-    status: Optional[bool] = None
+    status: Optional[bool] = True
 
 
 # Pydantic для изменения книги
