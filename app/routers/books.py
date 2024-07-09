@@ -1,8 +1,10 @@
+from typing import List
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from typing import List
-from schemas.book import BookCreate, Book, BookUpdate
+
 from db.database import get_db
+from schemas.book import BookCreate, Book, BookUpdate
 from services import book_service
 
 router = APIRouter()

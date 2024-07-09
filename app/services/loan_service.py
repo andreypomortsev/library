@@ -1,7 +1,9 @@
+from typing import List, Optional
+
 from fastapi import HTTPException
 from sqlalchemy import text, Date
 from sqlalchemy.orm import Session
-from typing import List, Optional
+
 from db.models import Loan as DBLoan
 from schemas.loan import Loan, LoanUpdate, LoanCreate
 
@@ -17,7 +19,7 @@ def create_loan(loan: LoanCreate, db: Session) -> Loan:
         },
     )
     db.commit()
-    
+
     return get_loan(loan.book_id, db, None)
 
 
@@ -40,7 +42,7 @@ def get_loans(db: Session, skip: int, limit: int) -> List[Loan]:
     if not db_loans:
         msg = "There are no loans yet."
         raise HTTPException(status_code=404, detail=msg)
-    
+
     return db_loans
 
 

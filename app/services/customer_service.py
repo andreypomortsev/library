@@ -1,6 +1,8 @@
+from typing import List
+
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from typing import List
+
 from db.models import Customer as DBCustomer
 from schemas.customer import Customer, CustomerUpdate, CustomerCreate
 

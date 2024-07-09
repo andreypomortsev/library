@@ -1,9 +1,11 @@
+from typing import List
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from typing import List
+
+from db.database import get_db
 from schemas.loan import LoanCreate, LoanUpdate, Loan
 from services import loan_service
-from db.database import get_db
 
 router = APIRouter()
 
