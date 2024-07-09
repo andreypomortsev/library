@@ -41,6 +41,6 @@ def get_all_users(
         .all()
     )
     if not db_authors:
-        msg = f"There are no authors here."
+        msg = "There are no authors here."
         raise HTTPException(status_code=404, detail=msg)
     return db_authors
