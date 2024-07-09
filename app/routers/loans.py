@@ -13,7 +13,7 @@ def create_loan(loan: LoanCreate, db: Session = Depends(get_db)):
     return loan_service.create_loan(loan, db)
 
 
-@router.put("/loan/{book_id}/edit", response_model=Loan)
+@router.put("/loans/{book_id}/edit", response_model=Loan)
 def update_loan(book_id: int, loan: LoanUpdate, db: Session = Depends(get_db)):
     return loan_service.update_loan(book_id, loan, db)
 

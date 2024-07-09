@@ -8,12 +8,12 @@ from services import book_service
 router = APIRouter()
 
 
-@router.post("/books/", response_model=Book)
+@router.post("/books/create", response_model=Book)
 def create_book(book: BookCreate, db: Session = Depends(get_db)):
     return book_service.create_book(book, db)
 
 
-@router.put("/books/{book_id}", response_model=Book)
+@router.put("/books/{book_id}/edit", response_model=Book)
 def update_book(book_id: int, book: BookUpdate, db: Session = Depends(get_db)):
     return book_service.update_book(book_id, book, db)
 

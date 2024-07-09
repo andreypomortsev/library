@@ -8,17 +8,17 @@ from db.database import get_db
 router = APIRouter()
 
 
-@router.post("/user/create", response_model=Customer)
+@router.post("/users/create", response_model=Customer)
 def create_user(user: CustomerCreate, db: Session = Depends(get_db)):
     return customer_service.create_user(user, db)
 
 
-@router.put("/user/{user_id}/edit", response_model=Customer)
+@router.put("/users/{user_id}/edit", response_model=Customer)
 def update_user(user_id: int, user: CustomerUpdate, db: Session = Depends(get_db)):
     return customer_service.update_user(user_id, user, db)
 
 
-@router.get("/user/{user_id}", response_model=Customer)
+@router.get("/users/{user_id}", response_model=Customer)
 def get_author_by_id(user_id: int, db: Session = Depends(get_db)):
     return customer_service.get_user(user_id, db)
 
