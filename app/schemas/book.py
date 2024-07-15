@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import ConfigDict, BaseModel
 from typing import Optional
 
 
@@ -28,6 +28,4 @@ class Book(BaseModel):
     genre: str
     year: int
     status: bool
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
