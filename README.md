@@ -1,7 +1,7 @@
 ![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)
-# Управление выдачей/возврата книг в библиотеке
+# Library Management System
 
-## Структура проекта
+## The Project Tree
 
 ```
 library/
@@ -33,25 +33,47 @@ library/
 └── docker-compose.yml
 ```
 
-### Предварительные требования
+### Structure Explanation:
+
+- **`LICENSE`**: File containing the MIT License details.
+- **`README.md`**: Markdown file containing project information.
+- **`app/`**: Directory containing FastAPI application files.
+  - **`Dockerfile`**: Docker configuration for the FastAPI application.
+  - **`main.py`**: Main entry point for the FastAPI application.
+  - **`requirements.txt`**: Python dependencies for the application.
+  - **`routers/`**: Directory containing route handlers for different entities (books, customers, loans).
+  - **`schemas/`**: Schemas for defining data models (book, customer, loan).
+  - **`services/`**: Business logic services (book_service, customer_service, loan_service).
+  - **`db/`**:Directory containing database-related files specific to the FastAPI application.
+  - **`database.py`**: Database connection setup.
+  - **`models.py`**: SQLAlchemy models for database tables.
+- **`db/`**: Directory containing database-related files.
+  - **`Dockerfile`**: Docker configuration for the database.
+  - **`init.sql`**: SQL script for initializing the database schema.
+  - **`procedures.sql`**: SQL script for stored procedures.
+- **`docker-compose.yml`**: YAML file defining Docker services for the application and database.
+
+
+### Prerequisites
 
 - Docker
 - Docker Compose
 
-### Запуск приложения
+### Run
 
-1. Клонируем репозиторий:
+1. Clone the repo:
    ```sh
    git clone https://github.com/andreypomortsev/library.git
    cd library
    ```
 
-2. Создание и запуск сервисов:
+2. Running the services:
    ```sh
    docker-compose up --build
    ```
 
-3. The FastAPI сервис будет доступен по адресу `http://localhost:8000`, проверить документацию можно тут `http://localhost:8000/docs`.
+3. The FastAPI is available at `http://localhost:8000`.
+4. The API documentation is available at `http://localhost:8000/docs`.
 
 <details>
   <summary><h2>Database Schema</h2></summary>
@@ -94,7 +116,7 @@ library/
 <details>
   <summary><h2>Endpoints</h2></summary>
 
-   ### Пользователи
+   ### Customers /Пользователи/ 
 - **POST /users/create**: Создать нового пользователя
   - *Тело запроса*:
      ```json
@@ -213,7 +235,7 @@ library/
     ]
     ```
   - *Описание*: Этот эндпоинт возвращает список всех авторов с возможностью пагинации. Параметры `skip` и `limit` позволяют пропустить определенное количество записей в начале списка и ограничить количество возвращаемых записей, соответственно.
-### Книги
+### Books /Книги/
 
 - **POST /books/create**: Создание новой книги
   - *Тело запроса*:
@@ -292,7 +314,7 @@ library/
       }
     ]
     ```
-### Аренда книг
+### Loans /Аренда книг/
 - **POST /loans/create**: Создание сдачи книги в аренду
   - *Тело запроса*:
      ```json
@@ -352,10 +374,10 @@ library/
     ```
 </details>
 
-## Автор
+## Author
 
 - [Andrei Pomortsev](https://www.linkedin.com/in/andreypomortsev/)
 
-## Лицензия
+## License
 
-Этот проект лицензируется по лицензии MIT - подробности см. в файле [LICENSE](./LICENSE).
+This project is licensed under the MIT License - see the file for details [LICENSE](./LICENSE).
