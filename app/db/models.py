@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date
-from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date
+
 
 Base = declarative_base()
 
@@ -15,14 +16,8 @@ class Customer(Base):
     birth_year = Column(Integer, nullable=False)
     is_author = Column(Boolean, nullable=False, default=False)
 
-    join = "and_(Customer.id == foreign(Book.author_id), \
-        Customer.is_author == True)"
-    books = relationship(
-        "Book",
-        back_populates="author",
-        primaryjoin=join,
-    )
-    loans = relationship("Loan", back_populates="user")
+    books = relationship("Book", back_populates="author", lazy="selectin")
+    loans = relationship("Loan", back_populates="user", lazy="selectin")
 
 
 class Book(Base):
@@ -35,18 +30,20 @@ class Book(Base):
     year = Column(Integer, nullable=False)
     status = Column(Boolean, nullable=False, default=True)
 
-    author = relationship("Customer", back_populates="books")
-    loans = relationship("Loan", back_populates="book")
+    author = relationship("Customer", back_populates="books", lazy="selectin")
+    loans = relationship("Loan", back_populates="book", lazy="selectin")
 
 
 class Loan(Base):
     __tablename__ = "loans"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    book_id = Column(Integer, ForeignKey("books.id"), index=True, nullable=False)
+    book_id = Column(
+        Integer, ForeignKey("books.id"), index=True, nullable=False
+    )
     user_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
     loan_date = Column(Date, nullable=False, index=True, default="now()")
     return_date = Column(Date, nullable=True, default=None)
 
-    book = relationship("Book", back_populates="loans")
-    user = relationship("Customer", back_populates="loans")
+    book = relationship("Book", back_populates="loans", lazy="selectin")
+    user = relationship("Customer", back_populates="loans", lazy="selectin")
