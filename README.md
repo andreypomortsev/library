@@ -45,8 +45,8 @@ library/
   - **`schemas/`**: Schemas for defining data models (book, customer, loan).
   - **`services/`**: Business logic services (book_service, customer_service, loan_service).
   - **`db/`**:Directory containing database-related files specific to the FastAPI application.
-  - **`database.py`**: Database connection setup.
-  - **`models.py`**: SQLAlchemy models for database tables.
+    - **`database.py`**: Database connection setup.
+    - **`models.py`**: SQLAlchemy models for database tables.
 - **`db/`**: Directory containing database-related files.
   - **`Dockerfile`**: Docker configuration for the database.
   - **`init.sql`**: SQL script for initializing the database schema.
