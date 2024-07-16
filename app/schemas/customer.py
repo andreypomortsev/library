@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import ConfigDict, BaseModel
 from typing import Optional
 
 
@@ -25,6 +25,4 @@ class Customer(BaseModel):
     middle_name: Optional[str] = None
     birth_year: int
     is_author: Optional[bool] = False
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

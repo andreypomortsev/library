@@ -1,16 +1,16 @@
 from typing import List, Optional
 
 from fastapi import HTTPException
-from sqlalchemy import text, Date
-from sqlalchemy.orm import Session
+from sqlalchemy import Date, select, text
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.models import Loan as DBLoan
 from schemas.loan import Loan, LoanUpdate, LoanCreate
 
 
-def create_loan(loan: LoanCreate, db: Session) -> Loan:
+async def create_loan(loan: LoanCreate, db: AsyncSession) -> Loan:
     query = text("SELECT create_book_loan(:book_id, :user_id, :loan_date)")
-    db.execute(
+    await db.execute(
         query,
         {
             "book_id": loan.book_id,
@@ -18,18 +18,21 @@ def create_loan(loan: LoanCreate, db: Session) -> Loan:
             "loan_date": loan.loan_date,
         },
     )
-    db.commit()
+    await db.commit()
 
-    return get_loan(loan.book_id, db, None)
+    return await get_loan(loan.book_id, db, None)
 
 
-def get_loan(book_id: int, db: Session, return_date: Optional[Date]) -> Loan:
-    db_loan = (
-        db.query(DBLoan)
+async def get_loan(
+        book_id: int, db: AsyncSession, return_date: Optional[Date]
+) -> Loan:
+    query = (
+        select(DBLoan)
         .filter(DBLoan.book_id == book_id, DBLoan.return_date == return_date)
         .order_by(DBLoan.id.desc())
-        .first()
     )
+    result = await db.execute(query)
+    db_loan = result.scalars().first()
     if not db_loan:
         msg = f"There is no loan with ID: {book_id}"
         raise HTTPException(status_code=404, detail=msg)
@@ -37,8 +40,9 @@ def get_loan(book_id: int, db: Session, return_date: Optional[Date]) -> Loan:
     return db_loan
 
 
-def get_loans(db: Session, skip: int, limit: int) -> List[Loan]:
-    db_loans = db.query(DBLoan).offset(skip).limit(limit).all()
+async def get_loans(db: AsyncSession, skip: int, limit: int) -> List[Loan]:
+    result = await db.execute(select(DBLoan).offset(skip).limit(limit))
+    db_loans = result.scalars().all()
     if not db_loans:
         msg = "There are no loans yet."
         raise HTTPException(status_code=404, detail=msg)
@@ -46,10 +50,12 @@ def get_loans(db: Session, skip: int, limit: int) -> List[Loan]:
     return db_loans
 
 
-def update_loan(book_id: int, loan: LoanUpdate, db: Session) -> Loan:
+async def update_loan(
+        book_id: int, loan: LoanUpdate, db: AsyncSession
+) -> Loan:
     close_query = text("SELECT return_book(:book_id, :return_date)")
     params = {"book_id": book_id, "return_date": loan.return_date}
-    db.execute(close_query, params)
-    db.commit()
+    await db.execute(close_query, params)
+    await db.commit()
 
-    return get_loan(book_id, db, loan.return_date)
+    return await get_loan(book_id, db, loan.return_date)

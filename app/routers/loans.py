@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from db.database import get_db
 from schemas.loan import LoanCreate, LoanUpdate, Loan
@@ -11,15 +11,19 @@ router = APIRouter()
 
 
 @router.post("/loans/create", response_model=Loan)
-def create_loan(loan: LoanCreate, db: Session = Depends(get_db)):
-    return loan_service.create_loan(loan, db)
+async def create_loan(loan: LoanCreate, db: AsyncSession = Depends(get_db)):
+    return await loan_service.create_loan(loan, db)
 
 
 @router.put("/loans/{book_id}/edit", response_model=Loan)
-def update_loan(book_id: int, loan: LoanUpdate, db: Session = Depends(get_db)):
-    return loan_service.update_loan(book_id, loan, db)
+async def update_loan(
+    book_id: int, loan: LoanUpdate, db: AsyncSession = Depends(get_db)
+):
+    return await loan_service.update_loan(book_id, loan, db)
 
 
 @router.get("/loans/", response_model=List[Loan])
-def get_all_loans(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
-    return loan_service.get_loans(db, skip, limit)
+async def get_all_loans(
+    skip: int = 0, limit: int = 50, db: AsyncSession = Depends(get_db)
+):
+    return await loan_service.get_loans(db, skip, limit)

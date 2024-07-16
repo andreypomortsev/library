@@ -29,4 +29,14 @@ jobs:
         run: |
           pip install flake8
           flake8 --max-line-length 84 app
+      
+      - name: Check Flake8 results
+        run: |
+          flake8_exit_status=$?
+          if [ $flake8_exit_status -ne 0 ]; then
+            echo "Linting failed. Exiting with status $flake8_exit_status."
+            exit 1
+          fi
 
+      - name: Final linting status
+        run: echo "Linting passed."
