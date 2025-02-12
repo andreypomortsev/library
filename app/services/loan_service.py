@@ -24,7 +24,7 @@ async def create_loan(loan: LoanCreate, db: AsyncSession) -> Loan:
 
 
 async def get_loan(
-        book_id: int, db: AsyncSession, return_date: Optional[Date]
+    book_id: int, db: AsyncSession, return_date: Optional[Date]
 ) -> Loan:
     query = (
         select(DBLoan)
@@ -51,7 +51,7 @@ async def get_loans(db: AsyncSession, skip: int, limit: int) -> List[Loan]:
 
 
 async def update_loan(
-        book_id: int, loan: LoanUpdate, db: AsyncSession
+    book_id: int, loan: LoanUpdate, db: AsyncSession
 ) -> Loan:
     close_query = text("SELECT return_book(:book_id, :return_date)")
     params = {"book_id": book_id, "return_date": loan.return_date}

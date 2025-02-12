@@ -9,7 +9,7 @@ from schemas.customer import Customer, CustomerUpdate, CustomerCreate
 
 
 async def create_user(user: CustomerCreate, db: AsyncSession) -> Customer:
-    db_customer = DBCustomer(**user.dict())
+    db_customer = DBCustomer(**user.model_dump())
     db.add(db_customer)
     await db.commit()
     await db.refresh(db_customer)
@@ -27,10 +27,10 @@ async def get_user(user_id: int, db: AsyncSession) -> Customer:
 
 
 async def update_user(
-        user_id: int, user: CustomerUpdate, db: AsyncSession
+    user_id: int, user: CustomerUpdate, db: AsyncSession
 ) -> Customer:
     db_customer = await get_user(user_id, db)
-    for key, value in user.dict(exclude_unset=True).items():
+    for key, value in user.model_dump(exclude_unset=True).items():
         setattr(db_customer, key, value)
     await db.commit()
     await db.refresh(db_customer)
