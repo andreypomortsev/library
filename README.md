@@ -70,7 +70,7 @@ library/
 
 2. Running the services:
    ```sh
-   docker-compose up --build
+   docker compose up --build
    ```
 
 3. The FastAPI is available at `http://localhost:8000`.
