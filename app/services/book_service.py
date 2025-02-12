@@ -19,10 +19,10 @@ async def get_book(book_id: int, db: AsyncSession) -> Book:
 
 
 async def update_book(
-        book_id: int, book_fields: BookUpdate, db: AsyncSession
+    book_id: int, book_fields: BookUpdate, db: AsyncSession
 ) -> Book:
     book = await get_book(book_id, db)
-    for key, value in book_fields.dict(exclude_unset=True).items():
+    for key, value in book_fields.model_dump(exclude_unset=True).items():
         setattr(book, key, value)
     await db.commit()
     await db.refresh(book)
@@ -30,7 +30,7 @@ async def update_book(
 
 
 async def get_books(
-        db: AsyncSession, skip: int = 0, limit: int = 10
+    db: AsyncSession, skip: int = 0, limit: int = 10
 ) -> List[Book]:
     result = await db.execute(select(DBBook).offset(skip).limit(limit))
     db_books = result.scalars().all()
@@ -41,7 +41,7 @@ async def get_books(
 
 
 async def create_book(book: BookCreate, db: AsyncSession) -> Book:
-    db_book = DBBook(**book.dict())
+    db_book = DBBook(**book.model_dump())
     db.add(db_book)
     await db.commit()
     await db.refresh(db_book)
