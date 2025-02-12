@@ -22,18 +22,14 @@ async def get_user_by_id(user_id: int, db: AsyncSession = Depends(get_db)):
     return await customer_service.get_user(user_id, db)
 
 
-@router.get("/users/", response_model=List[Customer])
-async def get_all_authors(
-    skip: int = 0, limit: int = 50, db: AsyncSession = Depends(get_db)
-):
-    return await customer_service.get_all_users(True, db, skip, limit)
-
-
 @router.get("/users", response_model=List[Customer])
 async def get_all_users(
-    skip: int = 0, limit: int = 50, db: AsyncSession = Depends(get_db)
+    is_author: bool = False,
+    skip: int = 0,
+    limit: int = 50,
+    db: AsyncSession = Depends(get_db),
 ):
-    return await customer_service.get_all_users(False, db, skip, limit)
+    return await customer_service.get_all_users(is_author, db, skip, limit)
 
 
 @router.put("/users/{user_id}", response_model=Customer)
