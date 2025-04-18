@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.models import Book as DBBook
+from core.models import Book as DBBook
 from schemas.book import Book, BookUpdate, BookCreate
 
 
