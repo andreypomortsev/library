@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.database import get_db
+from core.database import get_db
 from schemas.customer import CustomerCreate, CustomerUpdate, Customer
 from services import customer_service
 
