@@ -1,4 +1,4 @@
-FROM python:3.13-slim
+FROM python:3.13-alpine
 
 WORKDIR /app
 
@@ -8,10 +8,8 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# Создаем нового пользователя
 RUN useradd -m non_root
 
-# Меняем пользователя
 USER non_root
 
 EXPOSE 8000

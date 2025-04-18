@@ -11,11 +11,11 @@ library/
 ├── README.ru.md
 ├── app
 │   ├── Dockerfile
+│   ├── main.py
+│   ├── requirements.txt
 │   ├── core
 │   │   ├── database.py
 │   │   └── models.py
-│   ├── main.py
-│   ├── requirements.txt
 │   ├── routers
 │   │   ├── books.py
 │   │   ├── customers.py
