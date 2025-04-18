@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy import Date, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.models import Loan as DBLoan
+from database.models import Loan as DBLoan
 from schemas.loan import Loan, LoanUpdate, LoanCreate
 
 

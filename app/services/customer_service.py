@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.models import Customer as DBCustomer
+from database.models import Customer as DBCustomer
 from schemas.customer import Customer, CustomerUpdate, CustomerCreate
 
 
