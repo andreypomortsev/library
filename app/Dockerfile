@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-RUN useradd -m non_root
+RUN adduser -D non_root
 
 USER non_root
 
