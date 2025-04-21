@@ -41,49 +41,6 @@ library/
     └── api.ru.md
 ```
 
-Here’s your updated **Structure Explanation** based on the revised project tree:
-
----
-
-### 📁 Project Tree
-
-```
-library/
-├── LICENSE
-├── README.md
-├── README.ru.md
-├── app
-│   ├── Dockerfile
-│   ├── main.py
-│   ├── requirements.txt
-│   ├── core
-│   │   └── database.py
-│   ├── models
-│   │   ├── book.py
-│   │   ├── customer.py
-│   │   └── loan.py
-│   ├── routers
-│   │   ├── books.py
-│   │   ├── customers.py
-│   │   └── loans.py
-│   ├── schemas
-│   │   ├── book.py
-│   │   ├── customer.py
-│   │   └── loan.py
-│   └── services
-│       ├── book_service.py
-│       ├── customer_service.py
-│       └── loan_service.py
-├── db
-│   ├── Dockerfile
-│   ├── init.sql
-│   └── procedures.sql
-├── docker-compose.yml
-└── docs
-    ├── api.md
-    └── api.ru.md
-```
-
 ### 📚 Structure Explanation
 
 - **`LICENSE`**: MIT License for the project.
