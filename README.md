@@ -14,8 +14,11 @@ library/
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── core
-│   │   ├── database.py
-│   │   └── models.py
+│   │   └── database.py
+│   ├── models
+│   │   ├── book.py
+│   │   ├── customer.py
+│   │   └── loan.py
 │   ├── routers
 │   │   ├── books.py
 │   │   ├── customers.py
@@ -33,29 +36,79 @@ library/
 │   ├── init.sql
 │   └── procedures.sql
 └── docker-compose.yml
+└── docs
+    ├── api.md
+    └── api.ru.md
 ```
 
-### Structure Explanation:
+Here’s your updated **Structure Explanation** based on the revised project tree:
 
-- **`LICENSE`**: File containing the MIT License details.
-- **`README.md`**: Markdown file containing project information.
-- **`README.ru.md`**: Markdown file containing project information in Russian.
-- **`app/`**: Directory containing FastAPI application files.
-  - **`Dockerfile`**: Docker configuration for the FastAPI application.
-  - **`main.py`**: Main entry point for the FastAPI application.
-  - **`requirements.txt`**: Python dependencies for the application.
-  - **`routers/`**: Directory containing route handlers for different entities (books, customers, loans).
-  - **`schemas/`**: Schemas for defining data models (book, customer, loan).
-  - **`services/`**: Business logic services (book_service, customer_service, loan_service).
-  - **`core/`**:Directory containing database-related files specific to the FastAPI application.
-    - **`database.py`**: Database connection setup.
-    - **`models.py`**: SQLAlchemy models for database tables.
-- **`db/`**: Directory containing database-related files.
-  - **`Dockerfile`**: Docker configuration for the database.
-  - **`init.sql`**: SQL script for initializing the database schema.
-  - **`procedures.sql`**: SQL script for stored procedures.
-- **`docker-compose.yml`**: YAML file defining Docker services for the application and database.
+---
 
+### 📁 Project Tree
+
+```
+library/
+├── LICENSE
+├── README.md
+├── README.ru.md
+├── app
+│   ├── Dockerfile
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── core
+│   │   └── database.py
+│   ├── models
+│   │   ├── book.py
+│   │   ├── customer.py
+│   │   └── loan.py
+│   ├── routers
+│   │   ├── books.py
+│   │   ├── customers.py
+│   │   └── loans.py
+│   ├── schemas
+│   │   ├── book.py
+│   │   ├── customer.py
+│   │   └── loan.py
+│   └── services
+│       ├── book_service.py
+│       ├── customer_service.py
+│       └── loan_service.py
+├── db
+│   ├── Dockerfile
+│   ├── init.sql
+│   └── procedures.sql
+├── docker-compose.yml
+└── docs
+    ├── api.md
+    └── api.ru.md
+```
+
+### 📚 Structure Explanation
+
+- **`LICENSE`**: MIT License for the project.
+- **`README.md`**: Main project documentation in English.
+- **`README.ru.md`**: Project documentation in Russian.
+- **`app/`**: FastAPI application source code.
+  - **`Dockerfile`**: Docker setup for the FastAPI app.
+  - **`main.py`**: Application entry point, includes router registration.
+  - **`requirements.txt`**: Python dependencies list.
+  - **`core/`**: Core utilities and configuration.
+    - **`database.py`**: Database engine and session management.
+  - **`models/`**: SQLAlchemy ORM models that map to database tables.
+    - **`book.py`**, **`customer.py`**, **`loan.py`**: Models for respective entities.
+  - **`routers/`**: Route definitions (API endpoints).
+    - **`books.py`**, **`customers.py`**, **`loans.py`**: Routers for resource-specific operations.
+  - **`schemas/`**: Pydantic schemas for request validation and response serialization.
+    - Mirrors the structure of `models/` for consistency.
+  - **`services/`**: Business logic layer, keeping routes clean and focused.
+    - Service functions for books, customers, and loans.
+- **`db/`**: Database initialization and configuration.
+  - **`Dockerfile`**: PostgreSQL setup inside a container.
+  - **`init.sql`**: SQL script to initialize tables and seed data.
+  - **`procedures.sql`**: Contains stored procedures used by the app.
+- **`docker-compose.yml`**: Orchestration of the FastAPI and PostgreSQL services.
+- **`docs/`**: API documentation in both English and Russian.
 
 ### Prerequisites
 
