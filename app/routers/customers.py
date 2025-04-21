@@ -1,11 +1,10 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.database import get_db
-from schemas.customer import CustomerCreate, CustomerUpdate, Customer
+from fastapi import APIRouter, Depends
+from schemas.customer import Customer, CustomerCreate, CustomerUpdate
 from services import customer_service
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 

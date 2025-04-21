@@ -1,5 +1,6 @@
-from pydantic import ConfigDict, BaseModel
 from typing import Optional
+
+from pydantic import BaseModel, ConfigDict
 
 
 class CustomerCreate(BaseModel):

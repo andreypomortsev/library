@@ -1,11 +1,10 @@
 from typing import List
 
+from models.book import Book as DBBook
 from fastapi import HTTPException
+from schemas.book import Book, BookCreate, BookUpdate
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from core.models import Book as DBBook
-from schemas.book import Book, BookUpdate, BookCreate
 
 
 async def get_book(book_id: int, db: AsyncSession) -> Book:

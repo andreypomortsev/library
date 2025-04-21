@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-
 from routers import books, customers, loans
 
 app = FastAPI()

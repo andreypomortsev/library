@@ -1,11 +1,10 @@
 from typing import List
 
+from models.customer import Customer as DBCustomer
 from fastapi import HTTPException
+from schemas.customer import Customer, CustomerCreate, CustomerUpdate
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from core.models import Customer as DBCustomer
-from schemas.customer import Customer, CustomerUpdate, CustomerCreate
 
 
 async def create_user(user: CustomerCreate, db: AsyncSession) -> Customer:

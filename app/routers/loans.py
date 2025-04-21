@@ -1,11 +1,10 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.database import get_db
-from schemas.loan import LoanCreate, LoanUpdate, Loan
+from fastapi import APIRouter, Depends
+from schemas.loan import Loan, LoanCreate, LoanUpdate
 from services import loan_service
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
