@@ -1,11 +1,10 @@
 from typing import List, Optional
 
+from models.loan import Loan as DBLoan
 from fastapi import HTTPException
+from schemas.loan import Loan, LoanCreate, LoanUpdate
 from sqlalchemy import Date, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from core.models import Loan as DBLoan
-from schemas.loan import Loan, LoanUpdate, LoanCreate
 
 
 async def create_loan(loan: LoanCreate, db: AsyncSession) -> Loan:
